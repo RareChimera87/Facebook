@@ -25,9 +25,9 @@ class MainActivity : ComponentActivity() {
             val myNavController = rememberNavController()
 
             NavHost(navController = myNavController, startDestination = "login", modifier = Modifier.fillMaxSize()) {
-                composable(route="login"){FacebookLoginScreen()}
+                composable(route="login"){FacebookLoginScreen(myNavController)}
                 composable(route="register") {
-                    FacebookRegisterScreen()
+                    FacebookRegisterScreen(myNavController)
                 }
             }
         }
