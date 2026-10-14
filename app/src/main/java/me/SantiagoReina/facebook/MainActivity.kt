@@ -5,16 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import me.SantiagoReina.facebook.ui.theme.FacebookTheme
+import me.SantiagoReina.facebook.ui.screens.FacebookLoginScreen
+import me.SantiagoReina.facebook.ui.screens.FacebookRegisterScreen
+import me.SantiagoReina.facebook.ui.screens.FeedScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +22,13 @@ class MainActivity : ComponentActivity() {
             val myNavController = rememberNavController()
 
             NavHost(navController = myNavController, startDestination = "login", modifier = Modifier.fillMaxSize()) {
-                composable(route="login"){FacebookLoginScreen(myNavController)}
-                composable(route="register") {
-                    FacebookRegisterScreen(myNavController)
-                }
+                composable(route="login"){ FacebookLoginScreen(onClickRegister = {
+                    myNavController.navigate("register")
+                }, onClickIniciarSesion = { myNavController.navigate("feed")}) }
+                composable(route="register") { FacebookRegisterScreen(onClickBack = {
+                    myNavController.popBackStack()
+                }) }
+                composable(route="feed") { FeedScreen() }
             }
         }
     }
